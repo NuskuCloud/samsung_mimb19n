@@ -1,3 +1,3 @@
-module github.com/nuskucloud/samsung-mimb19n
+module github.com/nuskucloud/samsung_mimb19n
 
 go 1.18
