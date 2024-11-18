@@ -4,6 +4,15 @@ import "time"
 
 // Heating
 
+/*
+* 0,1,2,3,4
+* just use 4
+ */
+func (client *Client) SetAirConditionerMode(mode uint16) error {
+	time.Sleep(client.sleepDuration)
+	return client.ModbusClient.WriteRegister(53, mode)
+}
+
 func (client *Client) SetFlowTemperature(DegreesC uint16) error {
 	time.Sleep(client.sleepDuration)
 	return client.ModbusClient.WriteRegister(68, DegreesC*10)
