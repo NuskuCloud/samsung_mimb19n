@@ -10,7 +10,7 @@ The underlying serial (modbus) connection is handled via [simonvetter/modbus](ht
 
 ## Installation
 
-`go get github.com/nuskucloud/samsung_mimb19n@v0.5.0`
+`go get github.com/nuskucloud/samsung_mimb19n@v1.0.0`
 
 ## Usage
 
@@ -48,7 +48,7 @@ func main() {
 }
 ```
 
-## Fixing particular registers
+## Fixing hidden register interaction
 
 Some or all of the hidden registers need setting up prior to use, this only needs to be done one time per slave.
 
