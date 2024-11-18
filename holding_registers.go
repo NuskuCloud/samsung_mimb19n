@@ -5,14 +5,25 @@ import (
 	"time"
 )
 
-func (client *Client) ReadOutdoorTemperature() (float32, error) {
+func (client *Client) ReadOutdoorTemperature() (uint16, error) {
 	time.Sleep(client.sleepDuration)
-	outdoorTemperature, err := client.ModbusClient.ReadFloat32(5, modbus.HOLDING_REGISTER)
+	//outdoorTemperature, err := client.ModbusClient.ReadBytes(5, 2, modbus.HOLDING_REGISTER)
+	outdoorTemperature, err := client.ModbusClient.ReadRegister(5, modbus.HOLDING_REGISTER)
 	if err != nil {
-		return -1000, err
+		return 10123, err
 	}
 
-	return outdoorTemperature / 10, nil
+	return outdoorTemperature, nil
+}
+
+func (client *Client) ReadIndoorTemperature() (uint16, error) {
+	time.Sleep(client.sleepDuration)
+	indoorTemperature, err := client.ModbusClient.ReadRegister(59, modbus.HOLDING_REGISTER)
+	if err != nil {
+		return 10123, err
+	}
+
+	return indoorTemperature, nil
 }
 
 func (client *Client) ReadReturnTemperature() (float32, error) {
@@ -33,16 +44,6 @@ func (client *Client) ReadFlowTemperature() (float32, error) {
 	}
 
 	return flowTemperature / 10, nil
-}
-
-func (client *Client) ReadIndoorTemperature() (float32, error) {
-	time.Sleep(client.sleepDuration)
-	indoorTemperature, err := client.ModbusClient.ReadFloat32(59, modbus.HOLDING_REGISTER)
-	if err != nil {
-		return -1000, err
-	}
-
-	return indoorTemperature / 10, nil
 }
 
 func (client *Client) ReadOperatingMode() (float32, error) {
