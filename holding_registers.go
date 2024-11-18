@@ -1,8 +1,12 @@
 package samsung_mimb19n
 
-import "github.com/simonvetter/modbus"
+import (
+	"github.com/simonvetter/modbus"
+	"time"
+)
 
 func (client *Client) ReadOutdoorTemperature() (float32, error) {
+	time.Sleep(client.sleepDuration)
 	outdoorTemperature, err := client.ModbusClient.ReadFloat32(5, modbus.HOLDING_REGISTER)
 	if err != nil {
 		return -1000, err
@@ -12,6 +16,7 @@ func (client *Client) ReadOutdoorTemperature() (float32, error) {
 }
 
 func (client *Client) ReadReturnTemperature() (float32, error) {
+	time.Sleep(client.sleepDuration)
 	returnTemperature, err := client.ModbusClient.ReadFloat32(65, modbus.HOLDING_REGISTER)
 	if err != nil {
 		return -1000, err
@@ -21,6 +26,7 @@ func (client *Client) ReadReturnTemperature() (float32, error) {
 }
 
 func (client *Client) ReadFlowTemperature() (float32, error) {
+	time.Sleep(client.sleepDuration)
 	flowTemperature, err := client.ModbusClient.ReadFloat32(66, modbus.HOLDING_REGISTER)
 	if err != nil {
 		return -1000, err
@@ -30,6 +36,7 @@ func (client *Client) ReadFlowTemperature() (float32, error) {
 }
 
 func (client *Client) ReadIndoorTemperature() (float32, error) {
+	time.Sleep(client.sleepDuration)
 	indoorTemperature, err := client.ModbusClient.ReadFloat32(59, modbus.HOLDING_REGISTER)
 	if err != nil {
 		return -1000, err

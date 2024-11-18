@@ -6,8 +6,8 @@ import (
 )
 
 type Client struct {
-	ModbusClient            *modbus.ModbusClient
-	sleepAfterModbusCommand time.Duration
+	ModbusClient  *modbus.ModbusClient
+	sleepDuration time.Duration
 }
 
 // NewClient creates and returns a new Modbus client configured for the specified serial port.
@@ -24,8 +24,8 @@ const (
 func NewClient(serialPort string, sleepAfterModbusCommand time.Duration) *Client {
 	modbusClient := createModbusClient(serialPort)
 	client := &Client{
-		ModbusClient:            modbusClient,
-		sleepAfterModbusCommand: sleepAfterModbusCommand,
+		ModbusClient:  modbusClient,
+		sleepDuration: sleepAfterModbusCommand,
 	}
 	return client
 }

@@ -6,6 +6,8 @@ This project provides a Go-based Modbus client for interacting with the Samsung 
 
 The repository contains a client implementation to communicate with Modbus-enabled MIM-B19N devices. The client handles the configuration and communication protocols required to interface with these devices.
 
+The underlying serial (modbus) connection is handled via [simonvetter/modbus](https://github.com/simonvetter/modbus).
+
 ## Installation
 
 `go get github.com/nuskucloud/samsung_mimb19n@v0.5.0`
