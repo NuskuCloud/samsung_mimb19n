@@ -5,25 +5,24 @@ import (
 	"time"
 )
 
-func (client *Client) ReadOutdoorTemperature() (uint16, error) {
+func (client *Client) ReadOutdoorTemperature() (float32, error) {
 	time.Sleep(client.sleepDuration)
-	//outdoorTemperature, err := client.ModbusClient.ReadBytes(5, 2, modbus.HOLDING_REGISTER)
 	outdoorTemperature, err := client.ModbusClient.ReadRegister(5, modbus.HOLDING_REGISTER)
 	if err != nil {
 		return 10123, err
 	}
 
-	return outdoorTemperature, nil
+	return float32(outdoorTemperature / 10), nil
 }
 
-func (client *Client) ReadIndoorTemperature() (uint16, error) {
+func (client *Client) ReadIndoorTemperature() (float32, error) {
 	time.Sleep(client.sleepDuration)
 	indoorTemperature, err := client.ModbusClient.ReadRegister(59, modbus.HOLDING_REGISTER)
 	if err != nil {
 		return 10123, err
 	}
 
-	return indoorTemperature, nil
+	return float32(indoorTemperature) / 10, nil
 }
 
 func (client *Client) ReadReturnTemperature() (float32, error) {

@@ -53,7 +53,7 @@ func main() {
 Some or all of the hidden registers need setting up prior to use, this only needs to be done one time per slave.
 
 ```go
-heatpumpModbus.ModbusClient.WriteRegisters(6000, []uint16{HexToUint16("0x8238"), HexToUint16("0x8204")})
+heatpumpModbus.ModbusClient.WriteRegisters(6000, []uint16{HexToUint16("8238"), HexToUint16("8204")})
 if err != nil {
     fmt.Println("Error enabling hidden registers")
     panic(err)
