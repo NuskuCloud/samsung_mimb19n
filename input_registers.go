@@ -9,7 +9,7 @@ func (client *Client) DhwEnable(value bool) error {
 
 func (client *Client) SetFlowTemperature(DegreesC uint16) error {
 	time.Sleep(client.sleepDuration)
-	return client.ModbusClient.WriteRegister(74, DegreesC*10)
+	return client.ModbusClient.WriteRegister(68, DegreesC*10)
 }
 
 func (client *Client) SetInsideTargetTemperature(DegreesC uint16) error {
