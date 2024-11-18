@@ -20,13 +20,48 @@ package main
 import "github.com/nuskucloud/samsung_mimb19n"
 
 func main() {
-	heatpumpModbus := samsung_mimb19n.NewClient("/dev/ttyUSB0", 500)
+	heatpumpModbus := samsung_mimb19n.NewClient("/dev/ttyUSB0", 500) // Linux
+	//heatpumpModbus := samsung_mimb19n.NewClient("COM6", 500) // Windows
 
-	heatpumpModbus.DhwEnable(true)
+	// The modbus slave address of the heat pump.
+	err := heatpumpModbus.ModbusClient.SetUnitId(1)
+	if err != nil {
+		fmt.Println("Error setting unit id")
+		return
+	}
+
+	err = heatpumpModbus.ModbusClient.Open()
+	if err != nil {
+		// error out if we failed to connect/open the device
+		// note: multiple Open() attempts can be made on the same client until
+		// the connection succeeds (i.e. err == nil), calling the constructor again
+		// is unnecessary.
+		// likewise, a client can be opened and closed as many times as needed.
+		fmt.Println("Error opening modbus client")
+		panic(err)
+		return
+	}
+	
+	heatpumpModbus.CentralHeatingEnable(true)
 	heatpumpModbus.SetInsideTargetTemperature(20)
 	heatpumpModbus.SetFlowTemperature(40)
 }
 ```
+
+## Fixing particular registers
+
+Some or all of the hidden registers need setting up prior to use, this only needs to be done one time per slave.
+
+```go
+heatpumpModbus.ModbusClient.WriteRegisters(6000, []uint16{HexToUint16("0x8238"), HexToUint16("0x8204")})
+if err != nil {
+    fmt.Println("Error enabling hidden registers")
+    panic(err)
+}
+```
+
+_nb: this is untested but has worked in Python via `instrument.write_registers(6000, [0x8238, 0x8204])`_
+
 
 ---
 

@@ -44,3 +44,33 @@ func (client *Client) ReadIndoorTemperature() (float32, error) {
 
 	return indoorTemperature / 10, nil
 }
+
+func (client *Client) ReadOperatingMode() (float32, error) {
+	time.Sleep(client.sleepDuration)
+	indoorTemperature, err := client.ModbusClient.ReadFloat32(53, modbus.HOLDING_REGISTER)
+	if err != nil {
+		return -1000, err
+	}
+
+	return indoorTemperature / 10, nil
+}
+
+func (client *Client) ReadWaterOutTemperature() (float32, error) {
+	time.Sleep(client.sleepDuration)
+	waterOutTemperature, err := client.ModbusClient.ReadFloat32(53, modbus.HOLDING_REGISTER)
+	if err != nil {
+		return -1000, err
+	}
+
+	return waterOutTemperature / 10, nil
+}
+
+func (client *Client) ReadHotWaterTemperature() (float32, error) {
+	time.Sleep(client.sleepDuration)
+	waterOutTemperature, err := client.ModbusClient.ReadFloat32(75, modbus.HOLDING_REGISTER)
+	if err != nil {
+		return -1000, err
+	}
+
+	return waterOutTemperature / 10, nil
+}
