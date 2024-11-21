@@ -16,10 +16,10 @@ const (
 	OUTDOOR_HIDDEN_REGISTER_OUTSIDE_TEMPERATURE_SENSOR = 33284 // modbus:5, MessageSetID/hex: "8204"
 
 	// Indoor unit
-	INDOOR_HIDDEN_REGISTER_FLOW_SENSOR             = 17129 // modbus:82, MessageSetID/hex: "42E9"
-	INDOOR_HIDDEN_REGISTER_WAY_VALVE               = 16487 // modbus:90, MessageSetID/hex: "4067"
-	INDOOR_HIDDEN_REGISTER_WATER_PWM               = 16580 // modbus:?, MessageSetID/hex: "40C4"
-	INDOOR_HIDDEN_REGISTER_3_TEMPERATURE_REFERENCE = 16495 // modbus:?, MessageSetID/hex: "406F"
+	INDOOR_HIDDEN_REGISTER_FLOW_SENSOR           = 17129 // modbus:82, MessageSetID/hex: "42E9"
+	INDOOR_HIDDEN_REGISTER_3_WAY_VALVE           = 16487 // modbus:90, MessageSetID/hex: "4067"
+	INDOOR_HIDDEN_REGISTER_WATER_PWM             = 16580 // modbus:?, MessageSetID/hex: "40C4"
+	INDOOR_HIDDEN_REGISTER_TEMPERATURE_REFERENCE = 16495 // modbus:?, MessageSetID/hex: "406F"
 )
 
 // NewClient creates and returns a new Modbus client configured for the specified serial port.
