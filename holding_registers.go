@@ -77,7 +77,7 @@ func (client *Client) ReadOutsideTemperatureSensor() (float32, error) {
 
 func (client *Client) ReadFlowRate() (float32, error) {
 	time.Sleep(client.sleepDuration)
-	flowRate, err := client.ModbusClient.ReadRegister(38, modbus.HOLDING_REGISTER)
+	flowRate, err := client.ModbusClient.ReadRegister(37, modbus.HOLDING_REGISTER)
 	if err != nil {
 		return -1000, err
 	}

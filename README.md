@@ -55,17 +55,14 @@ Some or all of the hidden registers need setting up prior to use, this only need
 ```go
 heatpumpModbus.ModbusClient.WriteRegisters(6000, []uint16{
     samsung_mimb19n.HIDDEN_REGISTER_COMPRESSOR_FREQUENCY,
-	samsung_mimb19n.HIDDEN_REGISTER_OUTSIDE_TEMPERATURE_SENSOR,
-	samsung_mimb19n.HIDDEN_REGISTER_WATER_FLOW_RATE_SENSOR, 
+    samsung_mimb19n.HIDDEN_REGISTER_OUTSIDE_TEMPERATURE_SENSOR,
+    samsung_mimb19n.HIDDEN_REGISTER_WATER_FLOW_RATE_SENSOR, 
 })
 if err != nil {
     fmt.Println("Error enabling hidden registers")
     panic(err)
 }
 ```
-
-_nb: this is untested but has worked in Python via `instrument.write_registers(6000, [0x8238, 0x8204])`_
-
 
 ---
 
