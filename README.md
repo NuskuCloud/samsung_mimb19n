@@ -54,24 +54,35 @@ func main() {
 Some or all of the hidden registers need setting up prior to use, this only needs to be done one time per slave.
 
 ```go
+
 err = heatpumpModbus.ModbusClient.WriteRegisters(6000, []uint16{ // outdoor unit
     samsung_mimb19n.OUTDOOR_HIDDEN_REGISTER_OUTSIDE_TEMPERATURE_SENSOR,
     samsung_mimb19n.OUTDOOR_HIDDEN_REGISTER_COMPRESSOR_FREQUENCY,
 })
-
-err = heatpumpModbus.ModbusClient.WriteRegisters(7000, []uint16{ // indoor unit
-    samsung_mimb19n.INDOOR_HIDDEN_REGISTER_FLOW_SENSOR,
-    samsung_mimb19n.INDOOR_HIDDEN_REGISTER_TEMPERATURE_REFERENCE,
-    samsung_mimb19n.INDOOR_HIDDEN_REGISTER_WATER_PWM,
-    samsung_mimb19n.INDOOR_HIDDEN_REGISTER_3_WAY_VALVE,
-
-	// For adding a hidden register that is not included in the constants
-    HexToUint16("ABCD") // note; no `0x`
-})
 if err != nil {
-    fmt.Println("Error enabling hidden registers")
+    Logger.Error("Failed to configure hidden registers")
     panic(err)
 }
+
+err = heatpumpModbus.ModbusClient.WriteRegisters(7000, []uint16{ // indoor unit
+    // These registers start at 82 and go upwards, so whichever order they are listed will set their register id	
+	
+    samsung_mimb19n.INDOOR_HIDDEN_REGISTER_FLOW_SENSOR,           // Register 82
+    samsung_mimb19n.INDOOR_HIDDEN_REGISTER_TEMPERATURE_REFERENCE, // Register 83
+    samsung_mimb19n.INDOOR_HIDDEN_REGISTER_WATER_PWM,             // Register 84
+    samsung_mimb19n.INDOOR_HIDDEN_REGISTER_3_WAY_VALVE,           // Register 85
+    
+    HexToUint16("8010"), // Register 86,  Compressor 1 status
+    HexToUint16("8236"), // Register 87,  Compressor 1 Order frequency
+    HexToUint16("8237"), // Register 88,  Compressor 1 Target Frequency
+    HexToUint16("8276"), // Register 89,  Compressor 2 Operating Frequency
+    HexToUint16("8001"), // Register 90,  Heat pump operation mode
+})
+if err != nil {
+    Logger.Error("Failed to configure hidden registers")
+    panic(err)
+}
+
 
 func HexToUint16(hexStr string) uint16 {
     // Convert the hex string to a decimal integer (base 16)
