@@ -18,6 +18,7 @@ The underlying serial (modbus) connection is handled via [simonvetter/modbus](ht
 package main
 
 import "github.com/nuskucloud/samsung_mimb19n"
+import "fmt"
 
 func main() {
 	heatpumpModbus := samsung_mimb19n.NewClient("/dev/ttyUSB0", 500) // Linux
@@ -53,13 +54,32 @@ func main() {
 Some or all of the hidden registers need setting up prior to use, this only needs to be done one time per slave.
 
 ```go
-heatpumpModbus.ModbusClient.WriteRegisters(6000, []uint16{
-    samsung_mimb19n.HIDDEN_REGISTER_COMPRESSOR_FREQUENCY,
-    samsung_mimb19n.HIDDEN_REGISTER_OUTSIDE_TEMPERATURE_SENSOR,
+err = heatpumpModbus.ModbusClient.WriteRegisters(6000, []uint16{ // outdoor unit
+    samsung_mimb19n.OUTDOOR_HIDDEN_REGISTER_OUTSIDE_TEMPERATURE_SENSOR,
+    samsung_mimb19n.OUTDOOR_HIDDEN_REGISTER_COMPRESSOR_FREQUENCY,
+})
+
+err = heatpumpModbus.ModbusClient.WriteRegisters(7000, []uint16{ // indoor unit
+    samsung_mimb19n.INDOOR_HIDDEN_REGISTER_FLOW_SENSOR,
+    samsung_mimb19n.INDOOR_HIDDEN_REGISTER_TEMPERATURE_REFERENCE,
+    samsung_mimb19n.INDOOR_HIDDEN_REGISTER_WATER_PWM,
+    samsung_mimb19n.INDOOR_HIDDEN_REGISTER_3_WAY_VALVE,
+
+	// For adding a hidden register that is not included in the constants
+    HexToUint16("ABCD") // note; no `0x`
 })
 if err != nil {
     fmt.Println("Error enabling hidden registers")
     panic(err)
+}
+
+func HexToUint16(hexStr string) uint16 {
+    // Convert the hex string to a decimal integer (base 16)
+    value, err := strconv.ParseUint(hexStr, 16, 16)
+    if err != nil {
+        panic(err)
+    }
+    return uint16(value)
 }
 ```
 
