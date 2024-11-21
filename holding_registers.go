@@ -29,7 +29,7 @@ func (client *Client) ReadReturnTemperature() (float32, error) {
 	time.Sleep(client.sleepDuration)
 	returnTemperature, err := client.ModbusClient.ReadRegister(65, modbus.HOLDING_REGISTER)
 	if err != nil {
-		return -1000, err
+		return 0, err
 	}
 
 	return float32(returnTemperature) / 10, nil
@@ -39,7 +39,7 @@ func (client *Client) ReadFlowTemperature() (float32, error) {
 	time.Sleep(client.sleepDuration)
 	flowTemperature, err := client.ModbusClient.ReadRegister(66, modbus.HOLDING_REGISTER)
 	if err != nil {
-		return -1000, err
+		return 0, err
 	}
 
 	return float32(flowTemperature) / 10, nil
@@ -49,7 +49,7 @@ func (client *Client) ReadOperatingMode() (float32, error) {
 	time.Sleep(client.sleepDuration)
 	indoorTemperature, err := client.ModbusClient.ReadRegister(53, modbus.HOLDING_REGISTER)
 	if err != nil {
-		return -1000, err
+		return 0, err
 	}
 
 	return float32(indoorTemperature) / 10, nil
@@ -59,7 +59,7 @@ func (client *Client) ReadCompressorFrequency() (float32, error) {
 	time.Sleep(client.sleepDuration)
 	frequency, err := client.ModbusClient.ReadRegister(4, modbus.HOLDING_REGISTER)
 	if err != nil {
-		return -1000, err
+		return 0, err
 	}
 
 	return float32(frequency), nil
@@ -79,7 +79,7 @@ func (client *Client) ReadFlowRate() (float32, error) {
 	time.Sleep(client.sleepDuration)
 	flowRate, err := client.ModbusClient.ReadRegister(87, modbus.HOLDING_REGISTER)
 	if err != nil {
-		return -1000, err
+		return 0, err
 	}
 
 	return float32(flowRate), nil
@@ -89,7 +89,7 @@ func (client *Client) ReadWaterOutTemperature() (float32, error) {
 	time.Sleep(client.sleepDuration)
 	waterOutTemperature, err := client.ModbusClient.ReadRegister(53, modbus.HOLDING_REGISTER)
 	if err != nil {
-		return -1000, err
+		return 0, err
 	}
 
 	return float32(waterOutTemperature) / 10, nil
@@ -99,7 +99,7 @@ func (client *Client) ReadHotWaterTemperature() (float32, error) {
 	time.Sleep(client.sleepDuration)
 	waterOutTemperature, err := client.ModbusClient.ReadRegister(75, modbus.HOLDING_REGISTER)
 	if err != nil {
-		return -1000, err
+		return 0, err
 	}
 
 	return float32(waterOutTemperature) / 10, nil
