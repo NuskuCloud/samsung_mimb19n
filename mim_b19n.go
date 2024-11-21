@@ -13,7 +13,6 @@ type Client struct {
 const (
 	HIDDEN_REGISTER_COMPRESSOR_FREQUENCY       = 33411 // modbus:4, MessageSetID/hex: "8283"
 	HIDDEN_REGISTER_OUTSIDE_TEMPERATURE_SENSOR = 33284 // modbus:5, MessageSetID/hex: "8204"
-	HIDDEN_REGISTER_WATER_FLOW_RATE_SENSOR     = 17129 // modbus:37, MessageSetID/hex: "42E9"
 )
 
 // NewClient creates and returns a new Modbus client configured for the specified serial port.
