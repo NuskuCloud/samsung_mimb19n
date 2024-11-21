@@ -12,7 +12,7 @@ func (client *Client) ReadOutdoorTemperature() (float32, error) {
 		return 10123, err
 	}
 
-	return float32(outdoorTemperature / 10), nil
+	return float32(outdoorTemperature) / 10, nil
 }
 
 func (client *Client) ReadIndoorTemperature() (float32, error) {
@@ -32,7 +32,7 @@ func (client *Client) ReadReturnTemperature() (float32, error) {
 		return -1000, err
 	}
 
-	return float32(returnTemperature / 10), nil
+	return float32(returnTemperature) / 10, nil
 }
 
 func (client *Client) ReadFlowTemperature() (float32, error) {
@@ -42,7 +42,7 @@ func (client *Client) ReadFlowTemperature() (float32, error) {
 		return -1000, err
 	}
 
-	return float32(flowTemperature / 10), nil
+	return float32(flowTemperature) / 10, nil
 }
 
 func (client *Client) ReadOperatingMode() (float32, error) {
@@ -52,7 +52,27 @@ func (client *Client) ReadOperatingMode() (float32, error) {
 		return -1000, err
 	}
 
-	return float32(indoorTemperature / 10), nil
+	return float32(indoorTemperature) / 10, nil
+}
+
+func (client *Client) ReadCompressorFrequency() (float32, error) {
+	time.Sleep(client.sleepDuration)
+	frequency, err := client.ModbusClient.ReadRegister(4, modbus.HOLDING_REGISTER)
+	if err != nil {
+		return -1000, err
+	}
+
+	return float32(frequency), nil
+}
+
+func (client *Client) ReadOutsideTemperatureSensor() (float32, error) {
+	time.Sleep(client.sleepDuration)
+	temperature, err := client.ModbusClient.ReadRegister(5, modbus.HOLDING_REGISTER)
+	if err != nil {
+		return -1000, err
+	}
+
+	return float32(temperature), nil
 }
 
 func (client *Client) ReadWaterOutTemperature() (float32, error) {
@@ -62,7 +82,7 @@ func (client *Client) ReadWaterOutTemperature() (float32, error) {
 		return -1000, err
 	}
 
-	return float32(waterOutTemperature / 10), nil
+	return float32(waterOutTemperature) / 10, nil
 }
 
 func (client *Client) ReadHotWaterTemperature() (float32, error) {
@@ -72,5 +92,5 @@ func (client *Client) ReadHotWaterTemperature() (float32, error) {
 		return -1000, err
 	}
 
-	return float32(waterOutTemperature / 10), nil
+	return float32(waterOutTemperature) / 10, nil
 }
